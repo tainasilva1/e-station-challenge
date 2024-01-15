@@ -1,24 +1,22 @@
-import { IChartData } from '@/src/shared/types';
+import { DataKey, IChartData } from '@/src/shared/types';
 import { memo } from 'react';
 import { BarChart as BarChartRecharts, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 type Props = {
   data: IChartData[];
+  dataKey: DataKey[];
   YAxisMinValue?: number;
   YAxisMaxValue?: number;
-  barLeftColor?: string;
-  barRightColor?: string;
 }
 
 export const BarChart = ({ 
   data,
+  dataKey,
   YAxisMinValue = 0,
-  YAxisMaxValue = 120, // TODO: Escrever o codigo para retornar o maior valor
-  barLeftColor = '#3c81f6',
-  barRightColor = '#1ab8a6' 
+  YAxisMaxValue = 120 // TODO: Escrever o codigo para retornar o maior valor
 }: Props ) => (
   <BarChartRecharts
-    width={500}
+    width={600}
     height={300}
     data={data}
     barGap={4}
@@ -34,8 +32,14 @@ export const BarChart = ({
     <YAxis width={80} tickLine={false} axisLine={false} unit='(MWh)' domain={[YAxisMinValue, YAxisMaxValue]} />
     <Tooltip />
     <Legend align='right' verticalAlign='top' iconType='circle' height={36} />
-    <Bar barSize={20} dataKey="2021" fill={barLeftColor} />
-    <Bar barSize={20} dataKey="2022" fill={barRightColor} />
+    {dataKey.map((data) => (
+      <Bar 
+        key={data.key} 
+        barSize={20} 
+        dataKey={data.key} 
+        fill={data.color} 
+      />
+    ))}
   </BarChartRecharts>
 )
 

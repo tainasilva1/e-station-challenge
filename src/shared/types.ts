@@ -1,6 +1,10 @@
 export interface IChartData {
-  name: string;
-  [key: string]: string;
+  [key: string]: number;
+}
+
+export type DataKey = {
+  key: string;
+  color: string;
 }
 
 export interface IConsumptionData {

@@ -15,7 +15,7 @@ function getMonthName(date: string) {
 
 export function calculateConsumptionByYear(consumptionData: IConsumptionData[]) {
   const totalConsumptionByMonth: tTotalConsumptionByMonth = {};
-  
+
   // Iterar sobre os dados e calcular o consumo total por mês em cada ano
   consumptionData.forEach((data) => {
     const { year, month, consumption } = data;
@@ -38,3 +38,18 @@ export function calculateConsumptionByYear(consumptionData: IConsumptionData[]) 
 
   return result;
 };
+
+export function calculateConsumptionByDay(consumptionData: IConsumptionData[], date: string) {
+  const filteredData = consumptionData.filter(data => data.reference === date)
+  const flexibility = 0.1; // 10%
+  const contractedVolume = 100;
+  
+  const result = filteredData.map(data => ({
+    consumo: Math.floor(data.consumption),
+    flexMaxima: contractedVolume + (100 * flexibility),
+    flexMinima: contractedVolume - (100 * flexibility),
+    consumoFlat: 100
+  }));
+
+  return result;
+}
