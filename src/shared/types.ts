@@ -1,5 +1,5 @@
 export interface IChartData {
-  [key: string]: number;
+  [key: string]: number | string;
 }
 
 export type DataKey = {

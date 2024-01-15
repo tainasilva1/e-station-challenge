@@ -25,7 +25,7 @@ export const LineChart = ({
     }}
   >
     <CartesianGrid strokeDasharray="3 3" vertical={false} />
-    <XAxis width={80} tickLine={false} dataKey="name" />
+    <XAxis width={80} tick={false} tickLine={false} dataKey="name" />
     <YAxis unit={unit} tickLine={false} domain={['DataMin', 'DataMax']} />
     <Tooltip />
     <Legend align='right' verticalAlign='top' iconType='circle' height={36} />

@@ -45,11 +45,35 @@ export function calculateConsumptionByDay(consumptionData: IConsumptionData[], d
   const contractedVolume = 100;
   
   const result = filteredData.map(data => ({
+    name: data.hour,
     consumo: Math.floor(data.consumption),
     flexMaxima: contractedVolume + (100 * flexibility),
     flexMinima: contractedVolume - (100 * flexibility),
     consumoFlat: 100
   }));
 
+  return result;
+}
+
+export function calculateConsumptionByLastWeek(consumptionData: IConsumptionData[]) {
+  const last7days = consumptionData.filter(data => {
+    const dateReference = new Date(data.year, data.month - 1, data.day);
+    const lastDate = consumptionData[consumptionData.length - 1]
+    const formattedLastDate = new Date(lastDate.year, lastDate.month - 1, lastDate.day);
+
+    dateReference.setHours(0, 0, 0, 0);
+    formattedLastDate.setHours(0, 0, 0, 0);
+
+    const diffMilissegundos = formattedLastDate.getTime() - dateReference.getTime();
+    const diffDias = Math.floor(diffMilissegundos / (1000 * 60 * 60 * 24));
+
+    return diffDias <= 7;
+  });
+  console.log('last7days', last7days)
+  const result = last7days.map(data => ({
+    name: `${data.day}/${data.month}`,
+    consumo: parseFloat(data.consumption.toFixed(0)),
+  }));
+  console.log('result', result)
   return result;
 }
