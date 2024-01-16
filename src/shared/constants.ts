@@ -1,3 +1,5 @@
+export const MONTH_NAMES = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
+
 export const KEYS_DATA_BY_DAY = {
   CONSUMPTION: 'consumption',
   MAXIMUM_FLEX: 'maximum_flex',

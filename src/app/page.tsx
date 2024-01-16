@@ -5,12 +5,13 @@ import BarChart from '../components/BarChart';
 import Card from '../components/Card';
 import LineChart from '../components/LineChart';
 import Pagination from '../components/Pagination';
+import Select from '../components/Select';
 import Table from '../components/Table';
 import Title from '../components/Title';
 import { calculateConsumptionByDay, calculateConsumptionByLastWeek, calculateConsumptionByYear, formattedTableData } from '../helpers/DashboardHelper';
 import { usePagination } from '../hooks/usePagination';
 import { fetchData } from '../services/APIService';
-import { KEYS_BY_DATE, KEYS_BY_LAST_WEEK, KEYS_BY_YEAR } from '../shared/constants';
+import { KEYS_BY_DATE, KEYS_BY_LAST_WEEK, KEYS_BY_YEAR, MONTH_NAMES } from '../shared/constants';
 import { IChartData } from '../shared/types';
 
 export default function Home() {
@@ -19,6 +20,9 @@ export default function Home() {
   const [byDate, setByDate] = useState<IChartData[]>();
   const [byLast7Days, setByLastSetDays] = useState<IChartData[]>();
   const [dataTable, setDataTable] = useState<any>();
+  const [selectDay, setSelectedDay] = useState(1);
+  const [selectMonth, setSelectedMonth] = useState(0);
+  const [selectYear, setSelectedYear] = useState(2021);
 
   const { totalPages, currentPage, currentItens, setCurrentPage } = usePagination(data);
 
@@ -30,14 +34,36 @@ export default function Home() {
     if (currentItens) setDataTable(formattedTableData(currentItens));
   }, [currentItens])
 
+  useEffect(() => {
+    setByDate(calculateConsumptionByDay(data, selectDay, selectMonth + 1, selectYear))
+  }, [data, selectDay, selectMonth, selectYear])
+
   const getConsumption = async () => {
     const data = await fetchData();
 
     setData(data);
     setByYear(calculateConsumptionByYear(data));
-    setByDate(calculateConsumptionByDay(data, '27/04/2022'))
     setByLastSetDays(calculateConsumptionByLastWeek(data))
   }
+
+  const generateRange = (n: number) => {
+    return Array.from({ length: n }, (_, index) => index + 1);
+  }
+
+  const optionsDays = generateRange(31).map((day) => ({
+    value: day,
+    name: day,
+  }));
+
+  const optionsMonth = Object.keys(MONTH_NAMES).map((month) => ({
+    value: month,
+    name:  MONTH_NAMES[Number(month)],
+  }));
+
+  const optionsYear = [
+    {value: 2021, name: '2021'},
+    {value: 2022, name: '2022'}
+  ]
 
   return (
     <main className="flex justify-center font-roboto bg-gray-100 alig-min-h-screen flex-col justify-between p-7 space-y-8">
@@ -61,7 +87,26 @@ export default function Home() {
         </div>
         <div className='w-1/2'>
           {byDate && <Card>
-            <Title> Medição Horária (Por Dia) </Title>
+            <div>
+              <Title> Medição Horária (Por Dia) </Title>
+              <div className='flex space-x-12 py-4'>
+                <Select
+                  options={optionsDays}
+                  value={selectDay}
+                  onChange={(event) => setSelectedDay(parseInt(event.target.value))}
+                />
+                <Select
+                  options={optionsMonth}
+                  value={selectMonth}
+                  onChange={(event) => setSelectedMonth(parseInt(event.target.value))}
+                />
+                <Select
+                  options={optionsYear}
+                  value={selectYear}
+                  onChange={(event) => setSelectedYear(parseInt(event.target.value))}
+                />
+              </div>
+            </div>
             <LineChart data={byDate} dataKey={KEYS_BY_DATE} />
           </Card>}
         </div>

@@ -17,7 +17,7 @@ export const BarChart = ({
   YAxisMinValue = 0,
   YAxisMaxValue = 120 
 }: Props) => (
-  <ResponsiveContainer width="100%" height={300}>
+  <ResponsiveContainer width="100%" height={345}>
     <BarChartRecharts data={data} barGap={4}>
       <CartesianGrid strokeDasharray="3 3" vertical={false} />
       <XAxis style={{ fontSize: '0.8rem' }} tickLine={false} dataKey="name" />

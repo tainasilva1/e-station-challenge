@@ -1,17 +1,10 @@
-import { KEYS_DATA_BY_DAY } from "@/src/shared/constants";
+import { KEYS_DATA_BY_DAY, MONTH_NAMES } from "@/src/shared/constants";
 import { IChartData, IConsumptionData } from "@/src/shared/types";
 
 type tTotalConsumptionByMonth = {
   [key: number]: {
     [key: string]: number;
   }
-}
-
-const MONTH_NAMES = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
-
-function getMonthName(date: string) {
-  const newDate = new Date(date);
-  return MONTH_NAMES[newDate.getMonth()];
 }
 
 export function calculateConsumptionByYear(consumptionData: IConsumptionData[]) {
@@ -38,8 +31,9 @@ export function calculateConsumptionByYear(consumptionData: IConsumptionData[]) 
   return result;
 };
 
-export function calculateConsumptionByDay(consumptionData: IConsumptionData[], date: string) {
-  const filteredData = consumptionData.filter(data => data.reference === date)
+export function calculateConsumptionByDay(consumptionData: IConsumptionData[], day: number, month: number, year: number) {
+  const filteredData = consumptionData.filter(data => data.day === day && data.month === month && data.year === year)
+  
   const flexibility = 0.1; // 10%
   const contractedVolume = 100;
   
