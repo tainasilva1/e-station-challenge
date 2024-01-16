@@ -1,3 +1,10 @@
+export const KEYS_DATA_BY_DAY = {
+  CONSUMPTION: 'consumption',
+  MAXIMUM_FLEX: 'maximum_flex',
+  MINIMUM_FLEX: 'minimum_flex',
+  FLAT_CONSUMPTION: 'flat_consumption'
+}
+
 export const KEYS_BY_LAST_WEEK = [{ key: 'consumo', color: '#8884d8'}]
 
 export const KEYS_BY_YEAR = [
@@ -7,19 +14,27 @@ export const KEYS_BY_YEAR = [
 
 export const KEYS_BY_DATE = [
   {
-    key: 'consumo',
+    key: KEYS_DATA_BY_DAY.CONSUMPTION,
     color: '#5e9ae5'
   },
   {
-    key: 'flexMaxima',
+    key: KEYS_DATA_BY_DAY.MAXIMUM_FLEX,
     color: '#f97415'
   },
   {
-    key: 'flexMinima',
+    key: KEYS_DATA_BY_DAY.MINIMUM_FLEX,
     color: '#6466f1'
   },
   {
-    key: 'consumoFlat',
+    key: KEYS_DATA_BY_DAY.FLAT_CONSUMPTION,
     color: '#23c45e'
   },
 ]
+
+
+export const BY_DAY_LEGENDS = {
+  [KEYS_DATA_BY_DAY.CONSUMPTION]: 'Consumo',
+  [KEYS_DATA_BY_DAY.MAXIMUM_FLEX]: 'Flex Máxima',
+  [KEYS_DATA_BY_DAY.MINIMUM_FLEX]: 'Flex Mínima',
+  [KEYS_DATA_BY_DAY.FLAT_CONSUMPTION]: 'Consumo Flat'
+}

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { IConsumptionData } from "../shared/types";
 
 export const usePagination = (data: IConsumptionData[]) => {
-  const [currentPage, setCurrentPage] = useState(1752);
+  const [currentPage, setCurrentPage] = useState(1);
   const [itensPerPage, setItensPerPage] = useState(10);
   const [currentItens, setCurrentItens] = useState<IConsumptionData[]>();
   

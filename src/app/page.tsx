@@ -2,9 +2,11 @@
 import { useEffect, useState } from 'react';
 import AreaChart from '../components/AreaChart';
 import BarChart from '../components/BarChart';
+import Card from '../components/Card';
 import LineChart from '../components/LineChart';
 import Pagination from '../components/Pagination';
 import Table from '../components/Table';
+import Title from '../components/Title';
 import { calculateConsumptionByDay, calculateConsumptionByLastWeek, calculateConsumptionByYear, formattedTableData } from '../helpers/DashboardHelper';
 import { usePagination } from '../hooks/usePagination';
 import { fetchData } from '../services/APIService';
@@ -19,7 +21,7 @@ export default function Home() {
   const [dataTable, setDataTable] = useState<any>();
 
   const { totalPages, currentPage, currentItens, setCurrentPage } = usePagination(data);
-  
+
   useEffect(() => {
     getConsumption();
   }, []);
@@ -38,22 +40,53 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className='z-10 max-w-5xl w-full justify-between font-mono text-sm lg:flex'>
-        {byYear && <BarChart data={byYear} dataKey={KEYS_BY_YEAR} />}
-        {byDate && <LineChart data={byDate} dataKey={KEYS_BY_DATE} />}
+    <main className="flex justify-center font-roboto bg-gray-100 alig-min-h-screen flex-col justify-between p-7 space-y-8">
+      <div>
+        <Title> Dashboard </Title>
+        <p className="text-sm text-gray-700">
+          Informações baseados nos dados de medições colhidos na CCEE.
+        </p>
       </div>
-      <div className='z-10 max-w-5xl w-full justify-between font-mono text-sm lg:flex'>
-        {byLast7Days && <AreaChart data={byLast7Days} dataKey={KEYS_BY_LAST_WEEK}/>}
+      <div className='flex space-x-4 w-full text-sm lg:flex'>
+        <div className='w-1/2'>
+          {byYear && <Card>
+            <div>
+              <Title> Consumo Anual (2021/2022) </Title>
+              <p className="text-sm text-gray-400 ">
+                Comparativo mensal do consumo realizado nos anos de 2021 e 2022.
+              </p>
+            </div>
+            <BarChart data={byYear} dataKey={KEYS_BY_YEAR} />
+          </Card>}
+        </div>
+        <div className='w-1/2'>
+          {byDate && <Card>
+            <Title> Medição Horária (Por Dia) </Title>
+            <LineChart data={byDate} dataKey={KEYS_BY_DATE} />
+          </Card>}
+        </div>
       </div>
-      <div className='z-10 max-w-5xl w-full flex-col font-mono text-sm lg:flex'>
-        {dataTable && <Table data={dataTable} />}
-        <Pagination
-          setCurrentPage={setCurrentPage}
-          currentPage={currentPage}
-          totalPages={totalPages}
-        />
+      <div className='flex w-full text-sm lg:flex'>
+        {byLast7Days && <Card>
+          <Title> Medição Histórica (Última Semana) </Title>
+          <AreaChart data={byLast7Days} dataKey={KEYS_BY_LAST_WEEK} />
+        </Card>}
       </div>
-    </main>
+      <div className='flex w-full text-sm lg:flex'>
+        <Card>
+          <div>
+            <Title> Medições </Title>
+          </div>
+          {dataTable && <Table data={dataTable} />}
+          <div className='flex w-full lg:flex justify-end'>
+            <Pagination
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              totalPages={totalPages}
+            />
+          </div>
+        </Card>
+      </div>
+    </main >
   )
 }

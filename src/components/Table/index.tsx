@@ -25,7 +25,7 @@ const Table = ({ data }: Props) => {
                 {data.map((row, index) => (
                   <tr className="border-b" key={index}>
                     {Object.keys(row).map((key) => (
-                      <td key={key} className="whitespace-nowrap px-6 py-4 font-small text-gray-400">
+                      <td key={key} className="whitespace-nowrap px-6 py-4 font-small text-gray-500">
                         {row[key]}
                       </td>
                     ))}

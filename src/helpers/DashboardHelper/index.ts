@@ -1,3 +1,4 @@
+import { KEYS_DATA_BY_DAY } from "@/src/shared/constants";
 import { IChartData, IConsumptionData } from "@/src/shared/types";
 
 type tTotalConsumptionByMonth = {
@@ -16,7 +17,6 @@ function getMonthName(date: string) {
 export function calculateConsumptionByYear(consumptionData: IConsumptionData[]) {
   const totalConsumptionByMonth: tTotalConsumptionByMonth = {};
 
-  // Iterar sobre os dados e calcular o consumo total por mês em cada ano
   consumptionData.forEach((data) => {
     const { year, month, consumption } = data;
 
@@ -25,12 +25,11 @@ export function calculateConsumptionByYear(consumptionData: IConsumptionData[]) 
     totalConsumptionByMonth[month][year] = consumption;
   });
 
-  // Converter o objeto em uma matriz para facilitar a renderização
-  const result = Object.entries(totalConsumptionByMonth).map(([reference, yearData]) => {
-    const monthlyTotal: IChartData = { name: getMonthName(reference) };
+  const result = Object.entries(totalConsumptionByMonth).map(([month, yearData]) => {
+    const monthlyTotal: IChartData = { name: MONTH_NAMES[Number(month) - 1] };
 
     Object.entries(yearData).forEach(([year, consumption]) => {
-      monthlyTotal[year] = `${consumption.toFixed(0)}`;
+      monthlyTotal[year] = Math.floor(consumption);
     });
 
     return monthlyTotal;
@@ -46,10 +45,10 @@ export function calculateConsumptionByDay(consumptionData: IConsumptionData[], d
   
   const result = filteredData.map(data => ({
     name: data.hour,
-    consumo: Math.floor(data.consumption),
-    flexMaxima: contractedVolume + (100 * flexibility),
-    flexMinima: contractedVolume - (100 * flexibility),
-    consumoFlat: 100
+    [KEYS_DATA_BY_DAY.CONSUMPTION]: Math.floor(data.consumption),
+    [KEYS_DATA_BY_DAY.MAXIMUM_FLEX]: contractedVolume + (100 * flexibility),
+    [KEYS_DATA_BY_DAY.MINIMUM_FLEX]: contractedVolume - (100 * flexibility),
+    [KEYS_DATA_BY_DAY.FLAT_CONSUMPTION]: 100
   }));
 
   return result;
