@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import AreaChart from '../components/AreaChart';
 import BarChart from '../components/BarChart';
 import LineChart from '../components/LineChart';
-import { calculateConsumptionByDay, calculateConsumptionByLastWeek, calculateConsumptionByYear } from '../helpers/DashboardHelper';
+import Table from '../components/Table';
+import { calculateConsumptionByDay, calculateConsumptionByLastWeek, calculateConsumptionByYear, formattedTableData } from '../helpers/DashboardHelper';
 import { fetchData } from '../services/APIService';
 import { IChartData } from '../shared/types';
 
@@ -11,6 +12,7 @@ export default function Home() {
   const [byYear, setByYear] = useState<IChartData[]>();
   const [byDate, setByDate] = useState<IChartData[]>();
   const [byLast7Days, setByLastSetDays] = useState<IChartData[]>();
+  const [dataTable, setDataTable] = useState<any>();
 
   useEffect(() => {
     getConsumption();
@@ -42,12 +44,14 @@ export default function Home() {
     },
   ]
 
+
   const getConsumption = async () => {
     const data = await fetchData();
 
     setByYear(calculateConsumptionByYear(data));
     setByDate(calculateConsumptionByDay(data, '27/04/2022'))
     setByLastSetDays(calculateConsumptionByLastWeek(data))
+    setDataTable(formattedTableData(data))
   }
 
   return (
@@ -58,6 +62,9 @@ export default function Home() {
       </div>
       <div className='z-10 max-w-5xl w-full justify-between font-mono text-sm lg:flex'>
         {byLast7Days && <AreaChart data={byLast7Days} dataKey={byLast7DaysKeys}/>}
+      </div>
+      <div className='z-10 max-w-5xl w-full justify-between font-mono text-sm lg:flex'>
+        {dataTable && <Table data={dataTable} />}
       </div>
     </main>
   )

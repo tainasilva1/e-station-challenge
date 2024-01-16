@@ -65,15 +65,28 @@ export function calculateConsumptionByLastWeek(consumptionData: IConsumptionData
     formattedLastDate.setHours(0, 0, 0, 0);
 
     const diffMilissegundos = formattedLastDate.getTime() - dateReference.getTime();
-    const diffDias = Math.floor(diffMilissegundos / (1000 * 60 * 60 * 24));
+    const diffDays = Math.floor(diffMilissegundos / (1000 * 60 * 60 * 24));
 
-    return diffDias <= 7;
+    return diffDays <= 7;
   });
-  console.log('last7days', last7days)
+
   const result = last7days.map(data => ({
     name: `${data.day}/${data.month}`,
     consumo: parseFloat(data.consumption.toFixed(0)),
   }));
-  console.log('result', result)
+
   return result;
+}
+
+export function formattedTableData(consumptionData: IConsumptionData[]) {
+  return consumptionData.map((data) => {
+    return {
+      'Agente': data.agent,
+      'Ponto': data.meter,
+      'Data': data.reference,
+      'Hora': data.hour,
+      'Consumo Ativo (MWh)': data.consumption,
+      'Origem': data.origin
+    }
+  })
 }
