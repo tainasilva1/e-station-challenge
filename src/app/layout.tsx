@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import 'react-day-picker/dist/style.css'
+import "react-datepicker/dist/react-datepicker.css";
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })

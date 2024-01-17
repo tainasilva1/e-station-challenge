@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import AreaChart from '../components/AreaChart';
 import BarChart from '../components/BarChart';
 import Card from '../components/Card';
+import DatePicker from '../components/DatePicker';
 import LineChart from '../components/LineChart';
 import Pagination from '../components/Pagination';
 import Select from '../components/Select';
@@ -119,8 +120,11 @@ export default function Home() {
       </div>
       <div className='flex w-full text-sm lg:flex'>
         <Card>
-          <div>
+          <div className='flex items-center justify-between'>
             <Title> Medições </Title>
+            <div>
+              <DatePicker />
+            </div>
           </div>
           {dataTable && <Table data={dataTable} />}
           <div className='flex w-full lg:flex justify-end'>
