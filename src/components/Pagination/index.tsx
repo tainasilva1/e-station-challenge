@@ -17,8 +17,9 @@ const Pagination = ({
   const btnDisabledClass = 'opacity-50 cursor-not-allowed'
 
   return (
-    <div className='inline-flex space-x-2'>
+    <div data-testid='pagination' className='inline-flex space-x-2'>
       <button 
+        data-testid='prev-button'
         disabled={currentPage === 1}
         onClick={() => setCurrentPage(currentPage - 1)} 
         className={`${btnClass} ${currentPage === 1 ? btnDisabledClass : ''}`}
@@ -26,6 +27,7 @@ const Pagination = ({
         Anterior
       </button>
       <button 
+        data-testid='next-button'
         disabled={isLastPage}
         onClick={() => setCurrentPage(currentPage + 1)} 
         className={`${btnClass} ${isLastPage ? btnDisabledClass : ''}`}

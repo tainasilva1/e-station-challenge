@@ -5,7 +5,7 @@ type Props = {
 }
 
 const Card = ({ children }: Props) => (
-  <div className="flex space-y-4 w-full flex-col bg-white border border-gray-200 rounded-lg shadow p-6">
+  <div data-testid='card' className="flex space-y-4 w-full flex-col bg-white border border-gray-200 rounded-lg shadow p-6">
     {children}
   </div>
 )

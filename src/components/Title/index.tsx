@@ -5,7 +5,7 @@ type Props = {
 }
 
 const Title = ({ children }: Props) => (
-  <h3 className="text-lg text-gray-700 font-sans font-semibold">
+  <h3 data-testid='title' className="text-lg text-gray-700 font-sans font-semibold">
     {children}
   </h3>
 )

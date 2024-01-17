@@ -19,6 +19,7 @@ const DatePicker = ({ onDateChange }: Props) => {
 
   return (
     <ReactDatePicker
+      data-testid='date-picker'
       showIcon
       locale='ptBr'
       selectsRange={true}

@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders AreaChart correctly 1`] = `
+<div>
+  <div
+    class="recharts-responsive-container"
+    style="width: 100%; height: 350px; min-width: 0;"
+  />
+</div>
+`;

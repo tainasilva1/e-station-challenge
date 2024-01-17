@@ -40,8 +40,11 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (currentItens) setFormatDataTable(formattedTableData(currentItens));
-  }, [currentItens])
+    if (currentItens) {
+      setFormatDataTable(formattedTableData(currentItens));
+      console.log('dats', JSON.stringify(formattedTableData(currentItens)))
+    }
+    }, [currentItens])
 
   useEffect(() => {
     setByDate(calculateConsumptionByDay(data, selectDay, selectMonth + 1, selectYear))
@@ -96,7 +99,7 @@ export default function Home() {
       </div>
       <div className='flex space-x-4 w-full text-sm lg:flex'>
         <div className='w-1/2'>
-          {byYear && <Card>
+           <Card>
             <div>
               <Title> Consumo Anual (2021/2022) </Title>
               <p className="text-sm text-gray-400 ">
@@ -104,10 +107,10 @@ export default function Home() {
               </p>
             </div>
             <BarChart data={byYear} dataKey={KEYS_BY_YEAR} />
-          </Card>}
+          </Card>
         </div>
         <div className='w-1/2'>
-          {byDate && <Card>
+          <Card>
             <div>
               <Title> Medição Horária (Por Dia) </Title>
               <div className='flex space-x-12 py-4'>
@@ -129,14 +132,14 @@ export default function Home() {
               </div>
             </div>
             <LineChart data={byDate} dataKey={KEYS_BY_DATE} />
-          </Card>}
+          </Card>
         </div>
       </div>
       <div className='flex w-full text-sm lg:flex'>
-        {byLast7Days && <Card>
+         <Card>
           <Title> Medição Histórica (Última Semana) </Title>
           <AreaChart data={byLast7Days} dataKey={KEYS_BY_LAST_WEEK} />
-        </Card>}
+        </Card>
       </div>
       <div className='flex w-full text-sm lg:flex'>
         <Card>
@@ -146,7 +149,7 @@ export default function Home() {
               <DatePicker onDateChange={handleDateChange}/>
             </div>
           </div>
-          {formatDataTable && <Table data={formatDataTable} onSorted={handleSorted} />}
+          <Table data={formatDataTable} onSorted={handleSorted} />
           <div className='flex w-full items-center lg:flex justify-between'>
             <p className="text-xs text-gray-500">
               Exibindo {totalShowItens} de {totalItens} itens.
