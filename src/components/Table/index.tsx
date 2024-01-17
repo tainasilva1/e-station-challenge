@@ -15,10 +15,11 @@ const Table = ({ data, onSorted }: Props) => {
   const handleSorted = (key: keyof IConsumptionData) => {
     if (sort && sort.key === key) {
       setSort({ key, order: sort.order === 'asc' ? 'desc' : 'asc' });
+      onSorted({ key, order: sort.order === 'asc' ? 'desc' : 'asc' });
     } else {
       setSort({ key, order: 'asc' });
+      onSorted({ key, order: 'asc' })
     }
-    onSorted(sort)
   };
 
   if (!data) return (
@@ -60,7 +61,7 @@ const Table = ({ data, onSorted }: Props) => {
                 <tr>
                   {Object.keys(data[0]).map((key) => (
                     <th key={key} scope="col" className="px-6 py-4 text-gray-500">
-                      <button data-testid='sort-button' onClick={() => handleSorted(key)} className='flex space-x-4 items-center'>
+                      <button data-testid='sort-button' onClick={() => handleSorted(key as keyof IConsumptionData)} className='flex space-x-4 items-center'>
                         {CONSUMPTION_LABELS[key]}
                         <TiArrowUnsorted color='#9CA3AF' />
                       </button>
