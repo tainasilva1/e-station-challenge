@@ -74,12 +74,38 @@ export function calculateConsumptionByLastWeek(consumptionData: IConsumptionData
 export function formattedTableData(consumptionData: IConsumptionData[]) {
   return consumptionData.map((data) => {
     return {
-      'Agente': data.agent,
-      'Ponto': data.meter,
-      'Data': data.reference,
-      'Hora': data.hour,
-      'Consumo Ativo (MWh)': data.consumption,
-      'Origem': data.origin
+      agent: data.agent,
+      meter: data.meter,
+      reference: data.reference,
+      hour: data.hour,
+      consumption: data.consumption,
+      origin: data.origin
     }
   })
+}
+
+export function sorted(key: keyof IConsumptionData, ordem: 'asc' | 'desc') {
+  return (a: IConsumptionData, b: IConsumptionData) => {
+    const valueA = a[key];
+    const valueB = b[key];
+
+    if (ordem === 'asc') {
+      return valueA < valueB ? -1 : valueA > valueB ? 1 : 0;
+    } else {
+      return valueB < valueA ? -1 : valueB > valueA ? 1 : 0;
+    }
+  };
+};
+
+export function parseDate(dateString: string): Date {
+  const [day, month, year] = dateString.split('/').map(Number);
+  return new Date(year, month - 1, day);
+};
+
+
+export function filterByRangeDate(data: IConsumptionData[], startDate: Date, endDate: Date) {
+  return data.filter((item) => {
+    const parseDate = new Date(item.year, item.month - 1, item.day);;
+    return parseDate >= startDate && parseDate <= endDate;
+  });
 }

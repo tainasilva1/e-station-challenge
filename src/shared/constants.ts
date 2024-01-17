@@ -40,3 +40,21 @@ export const BY_DAY_LEGENDS = {
   [KEYS_DATA_BY_DAY.MINIMUM_FLEX]: 'Flex Mínima',
   [KEYS_DATA_BY_DAY.FLAT_CONSUMPTION]: 'Consumo Flat'
 }
+
+export const CONSUMPTION_KEYS = {
+  AGENT: 'agent',
+  METER: 'meter',
+  REFERENCE: 'reference',
+  HOUR: 'hour',
+  CONSUMPTION: 'consumption',
+  ORIGIN: 'origin'
+}
+
+export const CONSUMPTION_LABELS = {
+  [CONSUMPTION_KEYS.AGENT]: 'Agente',
+  [CONSUMPTION_KEYS.METER]: 'Ponto',
+  [CONSUMPTION_KEYS.REFERENCE]: 'Data',
+  [CONSUMPTION_KEYS.HOUR]: 'Hora',
+  [CONSUMPTION_KEYS.CONSUMPTION]: 'Consumo Ativo (MWh)',
+  [CONSUMPTION_KEYS.ORIGIN]: 'Origem'
+}
